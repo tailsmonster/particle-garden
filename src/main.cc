@@ -3,11 +3,11 @@
 
 using namespace std;
 
-void cleanup(SDL_Window *window);
+void cleanup(SDL_Window *window, SDL_Renderer *renderer);
 
 int main(int argc, char *argv[]) 
 {
-  // SDL_Init(SDL_INIT_VIDEO);
+  //init
   if (!SDL_Init(SDL_INIT_VIDEO))
   {
     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", "Error initializing SDL", nullptr);
@@ -21,46 +21,68 @@ int main(int argc, char *argv[])
 
   if (!window)
   {
-    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", "Error initializing window", nullptr);
     SDL_Log("SDL_CreateWindow failed: %s", SDL_GetError());    
-    cleanup(window);
+    cleanup(nullptr, nullptr);
     return 1;
   }
-  SDL_Log("window created!");
-  SDL_Log("Video driver: %s", SDL_GetCurrentVideoDriver());
 
-  if (!SDL_ShowWindow(window))
+  // renderer
+  SDL_Renderer *renderer = SDL_CreateRenderer(window, nullptr);
+
+  if (!renderer)
   {
-    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", "Error showing window", window);
-    SDL_Log("SDL_ShowWindow failed: %s", SDL_GetError());
-    cleanup(window);
+    SDL_Log("SDL_CreateRenderer failed: %s", SDL_GetError());
+    cleanup(window, nullptr);
     return 1;
   }
+
+  SDL_Log("Window created!");
+  SDL_Log("Video driver: %s", SDL_GetCurrentVideoDriver());
+  SDL_Log("Renderer: %s", SDL_GetRendererName(renderer));
+
+
   
   // gameloop
   bool running = true;
+
   while (running)
   {
-    SDL_Event event{0};
+    SDL_Event event{};
     while(SDL_PollEvent(&event))
     {
-      if (event.type == SDL_EVENT_QUIT)
+      switch (event.type)
       {
-        running = false;
+        case SDL_EVENT_QUIT:
+          running = false;
+          break;
       }
     }
-    // TODO: make this to a case switch
+
+    SDL_SetRenderDrawColor(renderer, 28, 0, 40, 255);
+    SDL_RenderClear(renderer);
+
+
+    // particle draw stuff will go here eventualy
+
+    SDL_RenderPresent(renderer);
   }
 
 
 
-  cleanup(window);
+  cleanup(window, renderer);
   return 0;
 }
 
 
-void cleanup(SDL_Window *window)
+void cleanup(SDL_Window *window, SDL_Renderer *renderer)
 {
-  SDL_DestroyWindow(window);
+  if (renderer)
+  {
+    SDL_DestroyRenderer(renderer);
+  }
+  if (window)
+  {
+    SDL_DestroyWindow(window);
+  } 
   SDL_Quit();
 }
