@@ -8,7 +8,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_subdirectory(lib/SDL)
 
 add_executable(particle-garden
-    src/main.cc
+  main.cc
+  particle.cc
+  particle.h
 )
 
 target_link_libraries(particle-garden PRIVATE SDL3::SDL3)
