@@ -17,7 +17,8 @@ struct Particle {
 
   void setColour(int red, int blue, int green);
 
+  void logCordinates(float &x, float &y);
+  
   bool isDead() const;
 
-  void logCordinates(float &x, float &y);
 };
