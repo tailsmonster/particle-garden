@@ -14,6 +14,7 @@ struct Particle {
   float velocityY = 0.0f;
   vector<int> colours = { 255, 255, 255, 255 };
   float life = 1.0f;
+  float size = 4.0f;
 
 
   void update(float deltaTime);

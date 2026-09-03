@@ -8,6 +8,7 @@ void Particle::update(float deltaTime)
   y += velocityY * deltaTime;
 
   life -= deltaTime;
+  size -= 3.0f * deltaTime;
 
   velocityY += 80.0f * deltaTime;
   velocityX += 80.0f * deltaTime;
@@ -19,8 +20,8 @@ void Particle::render(SDL_Renderer *renderer) const
   SDL_FRect rect{
     x,
     y,
-    4.0f,
-    4.0f
+    size,
+    size
   };
 
   SDL_RenderFillRect(renderer, &rect);
