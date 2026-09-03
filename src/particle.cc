@@ -10,11 +10,12 @@ void Particle::update(float deltaTime)
   life -= deltaTime;
 
   velocityY += 80.0f * deltaTime;
-  velocityx += 80.0f * deltaTime;
+  velocityX += 80.0f * deltaTime;
 }
 
 void Particle::render(SDL_Renderer *renderer) const
 {
+  SDL_SetRenderDrawColor(renderer, colours[0], colours[1], colours[2], colours[3]);
   SDL_FRect rect{
     x,
     y,
@@ -25,9 +26,9 @@ void Particle::render(SDL_Renderer *renderer) const
   SDL_RenderFillRect(renderer, &rect);
 }
 
-void Particle::setColour(int red, int blue, int green)
+void Particle::setColour(int red, int green, int blue, int alpha)
 {
-  Particle::colors = { red, blue, green, 255 };
+  colours = { red, green, blue, alpha };
 }
 
 
