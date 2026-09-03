@@ -72,7 +72,12 @@ jobs:
           libwayland-dev \
           libxkbcommon-dev \
           libegl1-mesa-dev \
-          libgl1-mesa-dev
+          libgl1-mesa-dev \
+          libxtst-dev
+    # Windows MVSC
+    - name: Setup MSVC
+      if: runner.os == 'Windows'
+      uses: ilammy/msvc-dev-cmd@v1
 
     # Ninja is already available on GitHub's Windows runner,
     # but verify that it exists before configuring.
