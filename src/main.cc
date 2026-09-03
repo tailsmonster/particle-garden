@@ -83,6 +83,7 @@ int main(int argc, char *argv[])
           break;
         case SDL_EVENT_MOUSE_BUTTON_DOWN:
           invertedColours = !invertedColours;
+          SDL_Log("inverted colours!");
           break;
       }
     }
@@ -136,7 +137,8 @@ int main(int argc, char *argv[])
     // bg colour
     if (invertedColours)
     {
-      SDL_SetRenderDrawColor(renderer, colour2[0], colour2[1], colour2[2], colour2[3]);    } 
+      SDL_SetRenderDrawColor(renderer, colour2[0], colour2[1], colour2[2], colour2[3]);    
+    } 
     else
     {
       SDL_SetRenderDrawColor(renderer, colour1[0], colour1[1], colour1[2], colour1[3]);
@@ -181,6 +183,7 @@ void spawnParticles(vector<Particle> &particles, float x, float y, int count)
     particle.life = randomFloat(0.3f, 0.8f);
 
     particles.push_back(particle);
+    particle.logCordinates(x, y);
   }
 }
 
